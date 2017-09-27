@@ -241,27 +241,45 @@ struct network_t {
 	struct gpio_t sck;
 	struct gpio_t mosi;
 	struct gpio_t miso;
-
 	uint8_t bank;
 	uint8_t next_pack_ptr;
 
 	void(*cs_set)(struct network_t * network,uint8_t var);
-	void(*init)(struct network_t * network);
-	uint8_t(*read_op)(struct network_t * network,uint8_t op);
+	uint8_t(*spi_send_data)(uint8_t byte);
+	uint8_t(*spi_receive_data)(void);
+
+	void(*init)(struct network_t * network,uint8_t * mac_addr);
+	uint8_t(*read_op)(struct network_t * network,uint8_t op,uint8_t address);
 	void(*write_op)(struct network_t * network,uint8_t op,uint8_t address,uint8_t data);
-	void(*read_buf)(struct network_t * network,uint8_t * data,uint16_t len);
-	void(*write_buf)(struct network_t * network,uint8_t * data,uint16_t len);
+	void(*read_buf)(struct network_t * network,uint8_t * pdata,uint16_t len);
+	void(*write_buf)(struct network_t * network,uint8_t * pdata,uint16_t len);
 	void(*set_bank)(struct network_t * network,uint8_t address);
-	uint8_t(*read_bank)(struct network_t * network,uint8_t address);
-	void(*write_data)(struct network_t * network,uint8_t data);
-	void(*write_phy)(struct network_t * network,uint8_t address,uint8_t data);
-	void(*packet_send)(struct network_t * network,uint8_t address,uint8_t * pack,int16_t len);
-	void(*packet_read)(struct network_t * network,uint8_t address,uint8_t * pack,int16_t maxlen);
+	uint8_t(*read_data)(struct network_t * network,uint8_t address);
+	void(*write_data)(struct network_t * network,uint8_t data,uint8_t address);
+	void(*write_phy)(struct network_t * network,uint8_t address,uint16_t data);
+	void(*packet_send)(struct network_t * network,uint8_t address,uint8_t * packet,uint16_t len);
+	uint16_t(*packet_read)(struct network_t * network,uint8_t address,uint8_t * packet,int16_t maxlen);
 };
+
+void network_cs_set(struct network_t * network,uint8_t var);
+uint8_t spi_send_data(uint8_t byte);
+uint8_t spi_receive_data(void);
+void network_init(struct network_t * network,uint8_t * mac_addr);
+uint8_t network_read_op(struct network_t * network,uint8_t op,uint8_t address);
+void network_write_op(struct network_t * network,uint8_t op,uint8_t address,uint8_t data);
+void network_read_buf(struct network_t * network,uint8_t * pdata,uint16_t len);
+void network_write_buf(struct network_t * network,uint8_t * pdata,uint16_t len);
+void network_set_bank(struct network_t * network,uint8_t address);
+uint8_t network_read_data(struct network_t * network,uint8_t address);
+void network_write_data(struct network_t * network,uint8_t data,uint8_t address);
+void network_write_phy(struct network_t * network,uint8_t address,uint16_t data);
+void network_packet_send(struct network_t * network,uint8_t address,uint8_t * packet,int16_t len);
+uint16_t network_packet_read(struct network_t * network,uint8_t address,uint8_t * packet,int16_t maxlen);
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif/* networkcard */
 

@@ -18,12 +18,10 @@
 
 int main(void) {
 	struct led_t led = {
-
 		{GPIOB, GPIO_Pin_11},
 		{GPIOB, GPIO_Pin_0},
 		{GPIOB, GPIO_Pin_10},
 		{GPIOB, GPIO_Pin_1},
-
 		&led_init,
 		&led_set_run,
 		&led_set_can,
