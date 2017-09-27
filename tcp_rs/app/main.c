@@ -16,6 +16,7 @@
 //*****************************************************************************
 #include "egg.h"
 
+
 int main(void) {
 	struct led_t led = {
 		{GPIOB, GPIO_Pin_11},
@@ -34,9 +35,11 @@ int main(void) {
 	};
 	led.init(&led);
 	led.set_run(&led,0);
-	while(1) {
+	while(1){
 
 	}
 }
+
+
 //! @}
 //! @}
